@@ -1,7 +1,7 @@
 # Chapter 1 - Basic project setup
 ## Code branch
 
-https://github.com/improbable-andreaskrugersen/spatialstein3d/tree/chapter1
+https://github.com/improbable-andreaskrugersen/spatialstein3d/tree/chapter1-base-project
 
 ## Goals
 
@@ -18,19 +18,19 @@ In contrast to later chapters, this first chapter doesn't contain any explicit t
 
 That being said, here's a short overview of what the project contains so far:
 
-- WorldMap ([client/src/worldmap.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1/client/src/worldmap.hpp))
+- WorldMap ([client/src/worldmap.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1-base-project/client/src/worldmap.hpp))
 
   This represents our world and is (at this stage) a simple 24 x 24 grid. Each cell consists of an integer that determines if the cell is free (`0`) or should have a wall (`> 0`). If there is a wall, the number represents a 1-based texture index of all the textures loaded into the renderer, so `1` is the first texture (texture index `0`) etc.
 
-- Player ([client/src/player.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1/client/src/player.hpp))
+- Player ([client/src/player.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1-base-project/client/src/player.hpp))
 
   A very simple player representation. We don't have any weapons or stats yet, just a position and a direction.
 
-- Camera ([client/src/camera.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1/client/src/camera.hpp))
+- Camera ([client/src/camera.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1-base-project/client/src/camera.hpp))
 
   An equally simple camera representation. In a raycaster, we just need a 2D vector representing our camera plane (which is always perpendicular to the player direction). Refer to [Lode's Raycasting Tutorial](https://lodev.org/cgtutor/raycasting.html) for more information.
 
-- RayCasterRenderer ([client/src/renderer.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1/client/src/renderer.hpp))
+- RayCasterRenderer ([client/src/renderer.hpp](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter1-base-project/client/src/renderer.hpp))
 
   The actual renderer. No further explanation is given here, please refer to [Lode's Raycasting Tutorial](https://lodev.org/cgtutor/raycasting.html) for details on how this works.
 

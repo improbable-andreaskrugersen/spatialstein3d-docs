@@ -15,6 +15,8 @@ The documentation is kept in a different repository to keep it consistent across
 
 ### List of Chapters
 - [Chapter 1 - Basic project setup](chapter1.md)
+- [Chapter 2 - SpatialOS project setup](chapter2.md)
+- [Chapter 3 - Connecting to a deployment](chapter3.md)
 
 ## Platforms
 The project was tested on both Ubuntu 18.04 and Windows 10.
@@ -28,13 +30,13 @@ We use [Bazel](https://bazel.build/) for building the project. Please follow the
 ### SDL
 The project is completely software-rendered and uses [SDL](https://www.libsdl.org/) for all its rendering.
 
-#### SDL - Ubuntu 18.04
+#### Ubuntu 18.04
 
 `sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev`
 
-#### SDL - Windows
+#### Windows
 
-SDL is automatically downloaded while building, nothing to do here.
+SDL is automatically downloaded while building with Bazel, nothing to do here.
 
 ### Other libraries
 Other libraries (where needed) were included directly in the repository.
