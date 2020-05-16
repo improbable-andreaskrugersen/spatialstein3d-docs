@@ -347,4 +347,4 @@ Note: we will add a `BUILD` file to the `generated_code` folder later, that's wh
 
 ## Conclusion
 
-And that's it for now! To run the client, we still have to do `bazel-bin/workers/client/src/spatialstein3d` (note the path has changed slightly). This will change next chapter, when we will actually start using the Worker SDK and connect our client worker to a local deployment.
+And that's it for now! To build, just run `spatial build`. To run the client, we still have to do `bazel-bin/workers/client/src/spatialstein3d` (note the path has changed slightly). This will change next chapter, when we will actually start using the Worker SDK and connect our client worker to a local deployment.
