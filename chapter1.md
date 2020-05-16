@@ -44,7 +44,7 @@ Move the player with `W`,`A`,`S`,`D` or the cursor keys.
 
 ## Building
 
-Open a terminal in the `chapter1` folder and run
+Open a terminal in the project folder and run
 
 `bazel build //client/src:spatialstein3d -c opt`
 
