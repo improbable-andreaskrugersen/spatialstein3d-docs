@@ -27,9 +27,7 @@ SpatialOS offers two flavors of organizing your projects: [Structured Project La
 
 ## Make it Spatial
 
-First we need to install the Spatial tools as described in [step 1 here](https://documentation.improbable.io/sdks-and-data/docs/set-up-the-sdks). The Spatial CLI is your main way to build your project, upload assemblies or launch local deployments. We will use this a lot.
-
-Step 2, installing a specific Worker SDK will be handled in the [next chapter](chapter3.md), don't do that yet.
+First we need to install the Spatial tools as described [here](https://documentation.improbable.io/sdks-and-data/docs/set-up-the-sdks). The Spatial CLI is your main way to build your project, upload assemblies or launch local deployments. We will use this a lot. Follow the instructions on that page but skip Step 2, installing a specific Worker SDK. This will be handled in the [next chapter](chapter3.md), don't do that yet.
 
 After the `spatial` CLI has been installed, run `spatial help` in your project directory. Among the actual help output, you will also see a warning printed at the top:
 
@@ -122,10 +120,14 @@ Let's start with this file content:
 {
     "build": {},
     "bridge": {
-        "worker_attribute_set": {}
+        "worker_attribute_set": {
+            "attributes": ["client"]
+        }
     }
 }
 ```
+
+We need to set at least one [worker attribute set](https://documentation.improbable.io/spatialos-overview/docs/worker-attribute-sets-and-worker-requirement-sets) to specify which [layer](https://documentation.improbable.io/spatialos-overview/docs/using-layers) our worker simulates. We'll come back to this later when we talk about what each of our workers can or cannot do. In this case we decide to put our worker in the arbitrary `client` layer.
 
 We still need to specify how to actually build the worker. We can either define all of our build tasks right here under the `build` node or we can keep them in a separate file. Let's go for the latter option for more clarity.
 
@@ -136,7 +138,9 @@ We still need to specify how to actually build the worker. We can either define 
         "tasks_filename": "build.json"
     },
     "bridge": {
-        "worker_attribute_set": {}
+        "worker_attribute_set": {
+            "attributes": ["client"]
+        }
     }
 }
 ```
@@ -196,6 +200,8 @@ As described on the [build configuration page](https://documentation.improbable.
     ]
 }
 ```
+
+The content of the `arguments` field is passed to another invocation of the `spatial` CLI, so whenever you specify a build step with a `command` field, you could also execute that step manually by calling `spatial` with these arguments.
 
 So let's replace our `Dummy` step above with this new content and then run `spatial codegen`. *(Note that we added those dummy steps so that we can actually run `spatial` now. Otherwise the CLI would complain that there are no steps defined for some of the tasks).*
 
