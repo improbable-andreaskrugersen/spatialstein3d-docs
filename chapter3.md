@@ -39,20 +39,22 @@ If we were using the Worker SDK in C in this project, we would be getting the C 
             ]
         },
         {
-            "path": "../../dependencies/worker_sdk/linux/lib",
+            "path": "../../dependencies/worker_sdk/lib",
             "type": "worker_sdk",
             "packages": [
                 {
                     "name": "c-static-x86_64-gcc510_pic-linux",
                     "platform": "linux"
+                },
+                {
+                    "name": "c-static-x86_64-vc141_md-win32",
+                    "platform": "windows"
                 }
             ]
         }
     ]
 }
 ```
-
-> TODO: Windows
 
 Now we still need to trigger downloading the packages. We'll do this as a separate build step in our `workers/client/build.json`, right after the `Codegen` step:
 
@@ -103,9 +105,7 @@ Extracting packages 1/1    [====================] 100%
 
 In our worker packages file we specified where to put the extracted packages. They are now located in our `dependencies/worker_sdk` directory in our project root.
 
-Worker packages are cached locally to avoid subsequent downloads. The location depends on your platform, on Linux they are located in `~/.improbable/cache/worker_package`.
-
-> TODO: Windows
+Worker packages are cached locally to avoid subsequent downloads. The location depends on your platform, on Linux they are located in `~/.improbable/cache/worker_package`, on Windows you can find them in `%APPDATA%\Local\.improbable\cache\worker_package`.
 
 While we're here, let's also add a clean step:
 
@@ -146,8 +146,6 @@ This will now additionally remove the extracted packages from our project direct
 ## Add the Worker SDK to our build process
 
 Now we need to make sure that the extracted worker packages are actually used when building our worker. This is specific to our chosen buildsystem Bazel and we won't discuss the details here. Have a look at [dependencies/worker_sdk/BUILD](https://github.com/improbable-andreaskrugersen/spatialstein3d/blob/chapter3-client-deployment/dependencies/worker_sdk/BUILD) to see the code for creating a library target for the Worker SDK. Finally, we need to add this target as a dependency to our `workers/client/src/BUILD` file:
-
-> TODO: verify link
 
 ```
 SHARED_DEPS = [
@@ -250,15 +248,24 @@ So let's add another build step that creates a zip file of our binary and assets
         },
         {
             "name": "Assembly",
-            "command": "./make_zip.sh"
+            "command": "./make_zip.sh",
+            "target": "linux"
+        },
+        {
+            "name": "Assembly",
+            "command": "powershell",
+            "arguments": [
+                ".\\make_zip.ps1"
+            ],
+            "target": "windows"
         }
     ]
 },
 ```
 
-`make_zip.sh` follows the same naming convention as `spatial file zip` and creates a zip file called `client@Linux.zip` and puts it into `build/assembly/worker`. This directory is the expected location for all your built assemblies in SPL.
+The `make_zip` scripts follow the same naming convention as `spatial file zip` and create a zip file called `client@<Platform>.zip` and puts it into `build/assembly/worker`. This directory is the expected location for all your built assemblies in SPL.
 
-> TODO: Windows
+**NOTE**: We need to run `spatial build --target=<platform>` from now on, where `<platform>` is either `linux` or `windows`, so that we run the correct build steps.
 
 
 ### Add a launch configuration
@@ -336,6 +343,11 @@ This is perfectly fine for our use case, we don't want to start clients automati
                 "artifact_name": "client@Linux.zip",
                 "command": "./spatialstein3d",
                 "arguments": []
+            },
+            "windows": {
+                "artifact_name": "client@Windows.zip",
+                "command": "./spatialstein3d.exe",
+                "arguments": []
             }
         }
     }
@@ -364,6 +376,6 @@ Let's quickly dig into the command we used: `spatial local worker launch` basica
 
 In this chapter we started a local deployment and set up our client worker to connect to that deployment using the receptionist flow. The worker doesn't do anything useful with that connection yet but we now have completed the bulk of the boiler plate. Next chapter we'll go and create some entities and components.
 
-To run, you now need to terminals and run these commands:
-- Local deployment: `spatial build && spatial local launch`
+To run, you now need two terminals and run these commands:
+- Local deployment: `spatial build --target=<platform> && spatial local launch`
 - Client worker: `spatial local worker launch client local`
