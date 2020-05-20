@@ -2,6 +2,8 @@
 ## Overview
 This repository contains the documentation for [Spatialstein 3D](https://github.com/improbable-andreaskrugersen/spatialstein3d). The project is a mixture of an example project and tutorial that shows how to get started with a SpatialOS project using the SpatialOS WorkerSDK. We start with a simple Wolfenstein3D clone without any networking or major features, then convert the project into a SpatialOS project and subsequently build features on top of that in "the Spatial way". No previous knowledge about SpatialOS is assumed but this doc will frequently point to the [official SpatialOS documentation](https://documentation.improbable.io).
 
+![Game View](images/Spatialstein3D.png)
+
 Why is this a Wolfenstein3D clone? There are several reasons:
 - The main concern of this project is to show SpatialOS features in the context of a game
 - The game must be simple enough that it doesn't require lots of code but must have enough room for growth to add interesting, networked features
@@ -17,6 +19,7 @@ The documentation is kept in a different repository to keep it consistent across
 - [Chapter 1 - Basic project setup](chapter1.md)
 - [Chapter 2 - SpatialOS project setup](chapter2.md)
 - [Chapter 3 - Connecting to a deployment](chapter3.md)
+- [Chapter 4 - Adding a player entity](chapter4.md)
 
 ## Platforms
 The project was tested on both Ubuntu 18.04 and Windows 10.
